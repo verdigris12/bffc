@@ -8,5 +8,8 @@ all: $(TARGET)
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)
 
+time: $(TARGET)
+	hyperfine -r 100 ./$(TARGET)
+
 clean:
 	@rm -f $(TARGET)
