@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <time.h>
 #include <stdlib.h>
 
 #include "bffc.h"
@@ -22,7 +23,11 @@ int eval(char* buffer, int bsize) {
 
 int main() {
   char* turing_gas = malloc(MLEN*MNUM*sizeof(char));
-  char* buffer = malloc(MLEN*2*sizeof(char));
+  srand(time(NULL)); // Seed the random number generator
+  for (int i = 0; i < MLEN * MNUM; i++) {
+    turing_gas[i] = rand() % 256; // Assign random byte
+  }
+  char* buffer = malloc(MLEN * 2 * sizeof(char));
   eval(buffer, BUFFER_SIZE);
   free(turing_gas);
   free(buffer);
