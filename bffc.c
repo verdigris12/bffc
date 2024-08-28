@@ -8,13 +8,14 @@
 #define MNUM 256
 #define MAX_EVALS 2**13
 #define BUFFER_SIZE MLEN*2
+#define TURING_GAS_SIZE MLEN*MNUM
 
 // Evaluate a BFF tape
 int eval(char* buffer, int bsize) {
   // Reset read and write heads
-  int head0 = 0;
-  int head1 = 0;
-  int instruct = 0;
+  // int head0 = 0;
+  // int head1 = 0;
+  // int instruct = 0;
   for (int i = 0; i < bsize; i++) {
     printf("%c", buffer[i]);
   }
@@ -22,10 +23,11 @@ int eval(char* buffer, int bsize) {
 }
 
 int main() {
-  char* turing_gas = malloc(MLEN*MNUM*sizeof(char));
+  char* turing_gas = malloc(TURING_GAS_SIZE);
   srand(time(NULL)); // Seed the random number generator
-  for (int i = 0; i < MLEN * MNUM; i++) {
-    turing_gas[i] = rand() % 256; // Assign random byte
+  printf("%d", sizeof(RAND_MAX));
+  for (int i = 0; i <TURING_GAS_SIZE; i++) {
+    // turing_gas[i] = rand() % 256; // Assign random byte
   }
   char* buffer = malloc(MLEN * 2 * sizeof(char));
   eval(buffer, BUFFER_SIZE);
