@@ -25,9 +25,10 @@ int eval(char* buffer, int bsize) {
 int main() {
   char* turing_gas = malloc(TURING_GAS_SIZE);
   srand(time(NULL)); // Seed the random number generator
-  printf("%d", sizeof(RAND_MAX));
-  for (int i = 0; i <TURING_GAS_SIZE; i++) {
-    // turing_gas[i] = rand() % 256; // Assign random byte
+  unsigned long random_value;
+  for (int i = 0; i < TURING_GAS_SIZE; i += sizeof(unsigned long)) {
+    random_value = rand();
+    memcpy(&turing_gas[i], &random_value, sizeof(unsigned long));
   }
   char* buffer = malloc(MLEN * 2 * sizeof(char));
   eval(buffer, BUFFER_SIZE);
