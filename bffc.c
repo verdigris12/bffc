@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "bffc.h"
 
@@ -22,16 +23,24 @@ int eval(char* buffer, int bsize) {
   return 0;
 }
 
+void rand_init_turing_gas(char* turing_gas, unsigned int rand_seed){
+  srand(rand_seed); // Seed the random number generator
+  int step_size = sizeof(RAND_MAX);
+  for (int i = 0; i < TURING_GAS_SIZE; i += step_size)
+    // Write step_size bytes directly into turing_gas starting with byte i
+    *(int*)(turing_gas + i) = rand();
+}
+
 int main() {
+  // Memory allocation
   char* turing_gas = malloc(TURING_GAS_SIZE);
-  srand(time(NULL)); // Seed the random number generator
-  unsigned long random_value;
-  for (int i = 0; i < TURING_GAS_SIZE; i += sizeof(unsigned long)) {
-    random_value = rand();
-    memcpy(&turing_gas[i], &random_value, sizeof(unsigned long));
-  }
-  char* buffer = malloc(MLEN * 2 * sizeof(char));
-  eval(buffer, BUFFER_SIZE);
+  char* buffer = malloc(BUFFER_SIZE);
+
+  //Primary loop
+  rand_init_turing_gas(turing_gas, time(NULL));
+  // eval(turing_gas, BUFFER_SIZE);
+
+  // Memory release
   free(turing_gas);
   free(buffer);
   return 0;
