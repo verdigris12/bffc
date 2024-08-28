@@ -1,4 +1,4 @@
-#BFFc - a C implementation of BFF self-replicator study
+# BFFc - a C implementation of BFF self-replicator study
 
 -----
 
