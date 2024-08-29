@@ -10,6 +10,7 @@
 #define MAX_EVALS 2**13
 #define BUFFER_SIZE MLEN*2
 #define TURING_GAS_SIZE MLEN*MNUM
+#define NMAX 1024
 
 // Evaluate a BFF tape
 int eval(char* buffer, int bsize) {
@@ -18,8 +19,9 @@ int eval(char* buffer, int bsize) {
   // int head1 = 0;
   // int instruct = 0;
   for (int i = 0; i < bsize; i++) {
-    printf("%c", buffer[i]);
+    printf("%x", buffer[i]);
   }
+  printf("\n");
   return 0;
 }
 
@@ -38,6 +40,12 @@ int main() {
 
   //Primary loop
   rand_init_turing_gas(turing_gas, time(NULL));
+  for (int epoch = 0; epoch < NMAX; epoch++){
+    memcpy(buffer, turing_gas + (rand() % MNUM), MLEN);
+    memcpy(buffer + MLEN, turing_gas + (rand() % MNUM), MLEN);
+    eval(buffer, BUFFER_SIZE);
+
+  }
   // eval(turing_gas, BUFFER_SIZE);
 
   // Memory release
