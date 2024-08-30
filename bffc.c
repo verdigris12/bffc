@@ -13,13 +13,41 @@
 #define NMAX 1024
 
 // Evaluate a BFF tape
-int eval(char* buffer, int bsize) {
+int eval(char* tape, int bsize) {
   // Reset read and write heads
-  // int head0 = 0;
-  // int head1 = 0;
-  // int instruct = 0;
-  for (int i = 0; i < bsize; i++) {
-    printf("%x", buffer[i]);
+  int head0 = 0;
+  int head1 = 0;
+  int instruct = 0;
+  while (instruct < bsize) {
+    switch (tape[instruct]) {
+      case '<':
+        head0--;
+        break;
+      case '>':
+        head0++;
+        break;
+      case '{':
+        head1--;
+        break;
+      case '}':
+        head1++;
+        break;
+      case '-':
+        tape[head0] = (char)((int)tape[head0] - 1);
+        break;
+      case '+':
+        tape[head0] = (char)((int)tape[head0] + 1);
+        break;
+      case '.':
+        tape[head1] = tape[head0];
+        break;
+      case ',':
+        tape[head0] = tape[head1];
+        break;
+      default:
+        break;
+    }
+    instruct++;
   }
   printf("\n");
   return 0;
