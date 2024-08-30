@@ -17,20 +17,25 @@ int eval(char* tape, int bsize) {
   // Reset read and write heads
   int head0 = 0;
   int head1 = 0;
+  // Reset instruct pointer
   int instruct = 0;
   while (instruct < bsize) {
     switch (tape[instruct]) {
       case '<':
-        head0--;
+        if (head0 > 0)
+          head0--;
         break;
       case '>':
-        head0++;
+        if (head0 < bsize)
+          head0++;
         break;
       case '{':
-        head1--;
+        if (head1 > 0)
+          head1--;
         break;
       case '}':
-        head1++;
+        if (head1 < bsize)
+          head1++;
         break;
       case '-':
         tape[head0] = (char)((int)tape[head0] - 1);
@@ -49,7 +54,7 @@ int eval(char* tape, int bsize) {
     }
     instruct++;
   }
-  printf("\n");
+  printf("123\n");
   return 0;
 }
 
@@ -72,7 +77,6 @@ int main() {
     memcpy(buffer, turing_gas + (rand() % MNUM), MLEN);
     memcpy(buffer + MLEN, turing_gas + (rand() % MNUM), MLEN);
     eval(buffer, BUFFER_SIZE);
-
   }
   // eval(turing_gas, BUFFER_SIZE);
 
