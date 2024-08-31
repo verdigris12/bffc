@@ -49,12 +49,29 @@ int eval(char* tape, int bsize) {
       case ',':
         tape[head0] = tape[head1];
         break;
+      // Jump forward to the matching ] command if head0 is at 0
+      case '[':
+        if (tape[head0] == 0) {
+          // Find matching parenthesis
+          int npar = 0;
+          for (; instruct < bsize; instruct++) {
+            if (tape[instruct] == '[')
+              npar--;
+            if (tape[instruct] == ']')
+              npar++;
+            if (npar == 0)
+              break;
+          }
+          // If no match found, terminate
+          if (npar != 0)
+            break;
+        }
+        break;
       default:
         break;
     }
     instruct++;
   }
-  printf("123\n");
   return 0;
 }
 
