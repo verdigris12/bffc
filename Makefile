@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 TARGET = bffc
-SRC = bffc.c
+SRC = bffc.c main.c
 
 all: $(TARGET)
 
