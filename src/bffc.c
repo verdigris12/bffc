@@ -21,7 +21,7 @@ int eval(char* tape, int bsize) {
       printf("%05d %05d %05d %05d || ", nreads, instruct, head0, head1);
       for (int i = 0; i < bsize; i++) {
         char to_print = tape[i];
-        if (!strchr("<>{}+-.,[]", tape[i]) && !isalnum(tape[i]))
+        if (!strchr("<>{}+-.,[]", tape[i]) && (!isalnum(tape[i]) || tape[i] == 0))
           to_print = '_';
         if (i == instruct) {
           printf("\033[37;41;1m%c\033[0m", to_print);
