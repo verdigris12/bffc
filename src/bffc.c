@@ -88,8 +88,10 @@ int eval(char* tape, int bsize) {
       for (int i = 0; i < bsize; i++) {
         if (strchr("<>{}+-.,[]", tape[i])) {
           printf("\033[0;32m%c\033[0m", tape[i]); // Green for Brainfuck characters
+        } else if (isalnum(tape[i])) {
+          printf("\033[0;37m%c\033[0m", tape[i]); // Grey for alphanumeric characters
         } else {
-          printf("\033[0;37m%c\033[0m", tape[i]); // Grey for other characters
+          printf("\033[0;37m_\033[0m"); // Underscore for non-alphanumeric characters
         }
       }
       printf("||\n");
