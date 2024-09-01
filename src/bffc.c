@@ -36,9 +36,8 @@ int eval(char* tape, int bsize) {
       }
       printf("||\n");
       printf("              READ HEAD || %*s^\n\n", head1, "");
+      getchar();
     }
-    printf("Press Enter to continue...");
-    getchar();
 
     switch (tape[instruct]) {
       case '<':
