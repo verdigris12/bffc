@@ -84,7 +84,15 @@ int eval(char* tape, int bsize) {
         break;
     }
     if (DEBUG) {
-      printf("%05d %05d %05d %05d ||%s||\n", nreads, instruct, head0, head1, tape);
+      printf("%05d %05d %05d %05d ||", nreads, instruct, head0, head1);
+      for (int i = 0; i < bsize; i++) {
+        if (strchr("<>{}+-.,[]", tape[i])) {
+          printf("\033[0;32m%c\033[0m", tape[i]); // Green for Brainfuck characters
+        } else {
+          printf("\033[0;37m%c\033[0m", tape[i]); // Grey for other characters
+        }
+      }
+      printf("||\n");
       printf("%*s\n", instruct + 26, "^");
     }
     instruct++;
