@@ -83,6 +83,10 @@ int eval(char* tape, int bsize) {
       default:
         break;
     }
+    if (DEBUG) {
+      printf("%05d %05d %05d %05d ||%s||\n", nreads, instruct, head0, head1, tape);
+      printf("%*s\n", instruct + 26, "^");
+    }
     instruct++;
   }
   return 0;
@@ -117,7 +121,7 @@ void run() {
 
   //Primary loop
   rand_init_turing_gas(turing_gas, time(NULL));
-  for (int epoch = 0; epoch < NMAX; epoch++) {
+  for (int epoch = 0; epoch < MAX_EPOCH; epoch++) {
     bff_epoch(turing_gas, buffer);
   }
 
