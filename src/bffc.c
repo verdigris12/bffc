@@ -20,12 +20,18 @@ int eval(char* tape, int bsize) {
       printf("             WRITE HEAD || %*s\n", head0, "V");
       printf("%05d %05d %05d %05d || ", nreads, instruct, head0, head1);
       for (int i = 0; i < bsize; i++) {
+        if (i == instruct) {
+          printf("\033[41m"); // Red background for current character position
+        }
         if (strchr("<>{}+-.,[]", tape[i])) {
           printf("\033[0;32m%c\033[0m", tape[i]); // Green for Brainfuck characters
         } else if (isalnum(tape[i])) {
           printf("\033[0;37m%c\033[0m", tape[i]); // Grey for alphanumeric characters
         } else {
           printf("\033[0;37m_\033[0m"); // Underscore for non-alphanumeric characters
+        }
+        if (i == instruct) {
+          printf("\033[0m"); // Reset background color
         }
       }
       printf("||\n");
