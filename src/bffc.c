@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
+#include <ctype.h>
 
 #include "bffc.h"
 
@@ -15,6 +16,22 @@ int eval(char* tape, int bsize) {
   int instruct = 0;
   int nreads = 0;
   while ((instruct < bsize) && (nreads++ < MAX_EVALS)) {
+    if (DEBUG) {
+      printf("             WRITE HEAD || %*s\n", head0, "V");
+      printf("%05d %05d %05d %05d || ", nreads, instruct, head0, head1);
+      for (int i = 0; i < bsize; i++) {
+        if (strchr("<>{}+-.,[]", tape[i])) {
+          printf("\033[0;32m%c\033[0m", tape[i]); // Green for Brainfuck characters
+        } else if (isalnum(tape[i])) {
+          printf("\033[0;37m%c\033[0m", tape[i]); // Grey for alphanumeric characters
+        } else {
+          printf("\033[0;37m_\033[0m"); // Underscore for non-alphanumeric characters
+        }
+      }
+      printf("||\n");
+      printf("              READ HEAD || %*s\n\n", head1, "^");
+    }
+
     switch (tape[instruct]) {
       case '<':
         if (head0 > 0)
@@ -82,20 +99,6 @@ int eval(char* tape, int bsize) {
         break;
       default:
         break;
-    }
-    if (DEBUG) {
-      printf("%05d %05d %05d %05d ||", nreads, instruct, head0, head1);
-      for (int i = 0; i < bsize; i++) {
-        if (strchr("<>{}+-.,[]", tape[i])) {
-          printf("\033[0;32m%c\033[0m", tape[i]); // Green for Brainfuck characters
-        } else if (isalnum(tape[i])) {
-          printf("\033[0;37m%c\033[0m", tape[i]); // Grey for alphanumeric characters
-        } else {
-          printf("\033[0;37m_\033[0m"); // Underscore for non-alphanumeric characters
-        }
-      }
-      printf("||\n");
-      printf("%*s\n", instruct + 26, "^");
     }
     instruct++;
   }
