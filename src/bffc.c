@@ -17,7 +17,7 @@ int eval(char* tape, int bsize) {
   int nreads = 0;
   while ((instruct < bsize) && (nreads++ < MAX_EVALS)) {
     if (DEBUG) {
-      printf("             WRITE HEAD || %*s\n", head0, "V");
+      printf("             WRITE HEAD || %*sV\n", head0, "");
       printf("%05d %05d %05d %05d || ", nreads, instruct, head0, head1);
       for (int i = 0; i < bsize; i++) {
         char to_print = tape[i];
