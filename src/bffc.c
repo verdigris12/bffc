@@ -4,7 +4,7 @@
 #include <string.h>
 #include <assert.h>
 
-#include "bffc.h"
+#include "src/bffc.h"
 
 // Evaluate a BFF tape
 int eval(char* tape, int bsize) {
