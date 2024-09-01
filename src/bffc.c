@@ -35,7 +35,7 @@ int eval(char* tape, int bsize) {
         }
       }
       printf("||\n");
-      printf("              READ HEAD || %*s\n\n", head1, "^");
+      printf("              READ HEAD || %*s^\n\n", head1, "");
     }
 
     switch (tape[instruct]) {
