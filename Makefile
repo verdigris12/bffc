@@ -1,9 +1,12 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -O2
 TARGET = bffc
-SRC = src/bffc.c src/main.c
+SRC = src/bffc.c
 
-all: $(TARGET)
+all: $(TARGET) src/main.h
+
+test: $(SRC) src/test_bff.c
+	$(CC) $(CFLAGS) -o $@ $^
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)

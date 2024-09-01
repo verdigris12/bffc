@@ -115,7 +115,6 @@ void run() {
   char* turing_gas = malloc(TURING_GAS_SIZE);
   char* buffer = malloc(BUFFER_SIZE);
 
-
   //Primary loop
   rand_init_turing_gas(turing_gas, time(NULL));
   for (int epoch = 0; epoch < NMAX; epoch++) {
