@@ -11,7 +11,7 @@ void pretty_print_tape(char* tape, int bsize, int nreads, int instruct, int head
   printf("WRITE   %03d \u250C", tape[head0]);
   for (int i = 0; i < bsize; i++) {
     if (i == head0)
-      printf("↓");
+      printf("\u253c");
     else
       printf("\u2500");
   }
@@ -36,8 +36,8 @@ void pretty_print_tape(char* tape, int bsize, int nreads, int instruct, int head
   printf("\u2502\n"); // Right border
   printf("READ    %03d \u2514", tape[head1]);
   for (int i = 0; i < bsize; i++) {
-    if (i == head0)
-      printf("↓");
+    if (i == head1)
+      printf("\u253c");
     else
       printf("\u2500");
   }
@@ -56,7 +56,7 @@ int eval(char* tape, int bsize) {
   while ((instruct < bsize) && (nreads++ < MAX_EVALS)) {
     if (DEBUG) {
       pretty_print_tape(tape, bsize, nreads, instruct, head0, head1);
-      getchar();
+      // getchar();
     }
 
     switch (tape[instruct]) {
@@ -133,6 +133,7 @@ int eval(char* tape, int bsize) {
     }
     instruct++;
   }
+
   return 0;
 }
 
