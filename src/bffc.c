@@ -7,6 +7,44 @@
 
 #include "bffc.h"
 
+void pretty_print_tape(char* tape, int bsize, int nreads, int instruct, int head0, int head1) {
+  printf("WRITE   %03d \u250C", tape[head0]);
+  for (int i = 0; i < bsize; i++) {
+    if (i == head0)
+      printf("↓");
+    else
+      printf("\u2500");
+  }
+  printf("\u2510\n");
+  printf("%05d %05d \u2502", nreads, instruct);
+  for (int i = 0; i < bsize; i++) {
+    char to_print = tape[i];
+    if (tape[i] == 0)
+      to_print = '_';
+    else if (!strchr("<>{}+-.,[]", to_print) && (!isalnum(to_print)))
+      to_print = '_';
+    if (i == instruct) {
+      printf("\033[37;41;1m%c\033[0m", to_print);
+    } else {
+      if (strchr("<>{}+-.,[]", to_print)) {
+        printf("\033[0;32m%c\033[0m", to_print); // Green for Brainfuck characters
+      } else {
+        printf("\033[0;36m%c\033[0m", to_print); // Grey for alphanumeric characters
+      }
+    }
+  }
+  printf("\u2502\n"); // Right border
+  printf("READ    %03d \u2514", tape[head1]);
+  for (int i = 0; i < bsize; i++) {
+    if (i == head0)
+      printf("↓");
+    else
+      printf("\u2500");
+  }
+  printf("\u2518\n"); // Bottom-right corner
+
+}
+
 // Evaluate a BFF tape
 int eval(char* tape, int bsize) {
   // Reset read and write heads
@@ -17,38 +55,7 @@ int eval(char* tape, int bsize) {
   int nreads = 0;
   while ((instruct < bsize) && (nreads++ < MAX_EVALS)) {
     if (DEBUG) {
-      printf("%05d WRITE    %*s↓\n", tape[head0], head0, "");
-      printf("%05d %05d \u250C", nreads, instruct); // Top-left corner
-      for (int i = 0; i < bsize; i++) {
-        printf("\u2500"); // Top border
-      }
-      printf("\u2510\n"); // Top-right corner
-
-      printf("          \u2502 "); // Left border
-      for (int i = 0; i < bsize; i++) {
-        char to_print = tape[i];
-        if (tape[i] == 0)
-          to_print = '_';
-        else if (!strchr("<>{}+-.,[]", to_print) && (!isalnum(to_print)))
-          to_print = '_';
-        if (i == instruct) {
-          printf("\033[37;41;1m%c\033[0m", to_print);
-        } else {
-          if (strchr("<>{}+-.,[]", to_print)) {
-            printf("\033[0;32m%c\033[0m", to_print); // Green for Brainfuck characters
-          } else {
-            printf("\033[0;36m%c\033[0m", to_print); // Grey for alphanumeric characters
-          }
-        }
-      }
-      printf(" \u2502\n"); // Right border
-
-      printf("          \u2514"); // Bottom-left corner
-      for (int i = 0; i < bsize; i++) {
-        printf("\u2500"); // Bottom border
-      }
-      printf("\u2518\n"); // Bottom-right corner
-      printf("%05d  READ    %*s↑\n\n", tape[head1], head1, "");
+      pretty_print_tape(tape, bsize, nreads, instruct, head0, head1);
       getchar();
     }
 
