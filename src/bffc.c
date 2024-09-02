@@ -18,7 +18,13 @@ int eval(char* tape, int bsize) {
   while ((instruct < bsize) && (nreads++ < MAX_EVALS)) {
     if (DEBUG) {
       printf("%05d WRITE    %*s↓\n", tape[head0], head0, "");
-      printf("%05d %05d || ", nreads, instruct);
+      printf("%05d %05d \u250C", nreads, instruct); // Top-left corner
+      for (int i = 0; i < bsize; i++) {
+        printf("\u2500"); // Top border
+      }
+      printf("\u2510\n"); // Top-right corner
+
+      printf("          \u2502 "); // Left border
       for (int i = 0; i < bsize; i++) {
         char to_print = tape[i];
         if (tape[i] == 0)
@@ -33,10 +39,15 @@ int eval(char* tape, int bsize) {
           } else {
             printf("\033[0;36m%c\033[0m", to_print); // Grey for alphanumeric characters
           }
-
         }
       }
-      printf("||\n");
+      printf(" \u2502\n"); // Right border
+
+      printf("          \u2514"); // Bottom-left corner
+      for (int i = 0; i < bsize; i++) {
+        printf("\u2500"); // Bottom border
+      }
+      printf("\u2518\n"); // Bottom-right corner
       printf("%05d  READ    %*s↑\n\n", tape[head1], head1, "");
       getchar();
     }
