@@ -13,12 +13,15 @@ int test_bff_eval(const char* data, const char* cmd, const int data_padding, con
   /* Test the resulting tape
    * Can't use regular strcmp since the tape can contain 0x0 bytes
    */
+
+  // Test data segment
   for (int i = 0; i < (int) strlen(data); i++){
     if (tape[i] != data[i]) {
       printf("Error: data segment mismatch at cell %d. Expected %x, got %x\n", i, data[i], tape[i]);
       return 0;
     }
   }
+  // Test data padding
   for (int i = 0; i < data_padding; i++){
     if (tape[(int) strlen(data) + i] != 0) {
       printf("Error: data padding mismatch at cell %d. Expected %x, got %x\n", i, 0, tape[i]);
