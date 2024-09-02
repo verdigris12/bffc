@@ -17,16 +17,18 @@ int eval(char* tape, int bsize) {
   int nreads = 0;
   while ((instruct < bsize) && (nreads++ < MAX_EVALS)) {
     if (DEBUG) {
-      printf("             WRITE HEAD || %*sV\n", head0, "");
-      printf("%05d %05d %05d %05d || ", nreads, instruct, head0, head1);
+      printf("%05d WRITE    %*s↓\n", tape[head0], head0, "");
+      printf("%05d %05d || ", nreads, instruct);
       for (int i = 0; i < bsize; i++) {
         char to_print = tape[i];
-        if (!strchr("<>{}+-.,[]", tape[i]) && (!isalnum(tape[i]) || tape[i] == 0))
+        if (tape[i] == 0)
+          to_print = '_';
+        else if (!strchr("<>{}+-.,[]", to_print) && (!isalnum(to_print)))
           to_print = '_';
         if (i == instruct) {
           printf("\033[37;41;1m%c\033[0m", to_print);
         } else {
-          if (strchr("<>{}+-.,[]", tape[i])) {
+          if (strchr("<>{}+-.,[]", to_print)) {
             printf("\033[0;32m%c\033[0m", to_print); // Green for Brainfuck characters
           } else {
             printf("\033[0;36m%c\033[0m", to_print); // Grey for alphanumeric characters
@@ -35,7 +37,7 @@ int eval(char* tape, int bsize) {
         }
       }
       printf("||\n");
-      printf("              READ HEAD || %*s^\n\n", head1, "");
+      printf("%05d  READ    %*s↑\n\n", tape[head1], head1, "");
       getchar();
     }
 
@@ -78,8 +80,10 @@ int eval(char* tape, int bsize) {
               npar--;
             if (tape[instruct] == ']')
               npar++;
-            if (npar == 0)
+            if (npar == 0){
+              instruct--;
               break;
+            }
           }
           // If no match found, terminate
           if (npar != 0)
@@ -96,8 +100,10 @@ int eval(char* tape, int bsize) {
               npar--;
             if (tape[instruct] == '[')
               npar++;
-            if (npar == 0)
+            if (npar == 0){
+              instruct--;
               break;
+            }
           }
           // If no match found, terminate
           if (npar != 0)

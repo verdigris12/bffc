@@ -6,12 +6,14 @@
 
 int test_bff_hello_world() {
   // Hello world in brainfuck
-  char* tape = ">++++++++[<++++++++>-]<H>++++[<++++>-]< >+++[<+++>-]<e>+++++++[<+++++++>-]<l>+++++++[<+++++++>-]<l>+++[<+++>-]<o>+++[<+++>-]< >++++[<++++>-]<w>+++++++[<+++++++>-]<o>+++++++[<+++++++>-]<r>++++[<++++>-]<l>+++[<+++>-]<d";
-  const int nbytes = strlen(tape);
-  char * buffer = malloc(nbytes + strlen("Hello world"));
-  memcpy(buffer + strlen("Hello world"), tape, nbytes);
-  eval(buffer, nbytes + strlen("Hello world"));
-  free(buffer);
+  char* cmd_string = "+[+]";
+  char* data_string = "Hello world";
+
+  char* tape = malloc(strlen(data_string) + strlen(cmd_string));
+  // Copy command segment to the tape
+  memcpy(tape + strlen(data_string), cmd_string, strlen(cmd_string));
+  eval(tape, strlen(data_string) + strlen(cmd_string));
+  free(tape);
   return 1;
 }
 

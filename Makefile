@@ -15,4 +15,4 @@ time: $(TARGET)
 	hyperfine -r 100 ./$(TARGET)
 
 clean:
-	@rm -f $(TARGET)
+	@rm -f $(TARGET) test
