@@ -5,7 +5,7 @@
 #define BUFFER_SIZE MLEN*2
 #define TURING_GAS_SIZE MLEN*MNUM
 #define MAX_EPOCH 1024
-#define DEBUG 1
+#define DEBUG 0
 
 int eval(char* tape, int bsize);
 
